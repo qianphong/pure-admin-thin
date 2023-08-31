@@ -3,68 +3,74 @@ import { store } from "@/store";
 import { userType } from "./types";
 import { routerArrays } from "@/layout/types";
 import { router, resetRouter } from "@/router";
-import { storageSession } from "@pureadmin/utils";
-import { getLogin, refreshTokenApi } from "@/api/user";
-import { UserResult, RefreshTokenResult } from "@/api/user";
 import { useMultiTagsStoreHook } from "@/store/modules/multiTags";
-import { type DataInfo, setToken, removeToken, sessionKey } from "@/utils/auth";
+import {
+  clearAuthCache,
+  getToken,
+  setToken,
+  getUserInfo,
+  setUserInfo,
+  getRoles,
+  setRules
+} from "@/utils/auth";
+import { encryptByBase64 } from "@qianphong/utils";
+import { login } from "@/api";
 
 export const useUserStore = defineStore({
   id: "pure-user",
   state: (): userType => ({
     // 用户名
-    username:
-      storageSession().getItem<DataInfo<number>>(sessionKey)?.username ?? "",
+    token: getToken(),
+    // 用户信息
+    userInfo: getUserInfo(),
     // 页面级别权限
-    roles: storageSession().getItem<DataInfo<number>>(sessionKey)?.roles ?? []
+    roles: getRoles() || []
   }),
   actions: {
-    /** 存储用户名 */
-    SET_USERNAME(username: string) {
-      this.username = username;
+    /** 存储Token */
+    SET_TOKEN(token: string) {
+      this.token = token;
+      setToken(token);
+    },
+    /** 存储用户信息 */
+    SET_USERINFO(userInfo: Store["userInfo"]) {
+      this.userInfo = userInfo;
+      setUserInfo(userInfo);
     },
     /** 存储角色 */
     SET_ROLES(roles: Array<string>) {
       this.roles = roles;
+      setRules(roles);
     },
     /** 登入 */
-    async loginByUsername(data) {
-      return new Promise<UserResult>((resolve, reject) => {
-        getLogin(data)
-          .then(data => {
-            if (data) {
-              setToken(data.data);
-              resolve(data);
-            }
-          })
-          .catch(error => {
-            reject(error);
-          });
-      });
+    async login(body: Store["loginParams"]) {
+      const data = await login(body);
+      if (data) {
+        // 保存 token
+        this.SET_TOKEN(
+          encryptByBase64(
+            JSON.stringify({
+              Token: data.token,
+              userId: data.id
+            })
+          )
+        );
+        this.SET_USERINFO(data);
+      }
+    },
+    /** 重置状态 */
+    resetState() {
+      this.token = "";
+      this.roles = [];
+      this.userInfo = null;
+      clearAuthCache();
     },
     /** 前端登出（不调用接口） */
-    logOut() {
-      this.username = "";
-      this.roles = [];
-      removeToken();
+    logout() {
+      this.resetState();
       useMultiTagsStoreHook().handleTags("equal", [...routerArrays]);
       resetRouter();
       router.push("/login");
-    },
-    /** 刷新`token` */
-    async handRefreshToken(data) {
-      return new Promise<RefreshTokenResult>((resolve, reject) => {
-        refreshTokenApi(data)
-          .then(data => {
-            if (data) {
-              setToken(data.data);
-              resolve(data);
-            }
-          })
-          .catch(error => {
-            reject(error);
-          });
-      });
     }
   }
 });

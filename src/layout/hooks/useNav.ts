@@ -34,7 +34,7 @@ export function useNav() {
 
   /** 用户名 */
   const username = computed(() => {
-    return useUserStoreHook()?.username;
+    return useUserStoreHook()?.userInfo?.userName;
   });
 
   const avatarsStyle = computed(() => {
@@ -67,7 +67,7 @@ export function useNav() {
 
   /** 退出登录 */
   function logout() {
-    useUserStoreHook().logOut();
+    useUserStoreHook().logout();
   }
 
   function backTopMenu() {

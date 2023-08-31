@@ -36,6 +36,7 @@ export type setType = {
 };
 
 export type userType = {
-  username?: string;
-  roles?: Array<string>;
+  token?: string;
+  userInfo?: Store["userInfo"] | null;
+  roles: string[];
 };

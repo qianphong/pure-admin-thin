@@ -4,7 +4,6 @@ import type {
   PropType as VuePropType,
   ComponentPublicInstance
 } from "vue";
-import type { ECharts } from "echarts";
 import type { IconifyIcon } from "@iconify/vue";
 import type { TableColumns } from "@pureadmin/table";
 
@@ -153,8 +152,16 @@ declare global {
    * 平台里所有组件实例都能访问到的全局属性对象的类型声明
    */
   interface GlobalPropertiesApi {
-    $echarts: ECharts;
     $storage: ResponsiveStorage;
     $config: ServerConfigs;
+  }
+
+  interface Store {
+    loginParams: API.LoginModel;
+    userInfo: {
+      userName: string;
+      id: number;
+      token: string;
+    };
   }
 }

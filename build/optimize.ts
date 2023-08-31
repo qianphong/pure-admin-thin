@@ -10,7 +10,6 @@ const include = [
   "dayjs",
   "axios",
   "pinia",
-  "js-cookie",
   "sortablejs",
   "pinyin-pro",
   "@vueuse/core",
