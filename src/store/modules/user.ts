@@ -13,7 +13,6 @@ import {
   getRoles,
   setRules
 } from "@/utils/auth";
-import { encryptByBase64 } from "@qianphong/utils";
 import { login } from "@/api";
 
 export const useUserStore = defineStore({
@@ -46,16 +45,9 @@ export const useUserStore = defineStore({
     async login(body: Store["loginParams"]) {
       const data = await login(body);
       if (data) {
-        // 保存 token
-        this.SET_TOKEN(
-          encryptByBase64(
-            JSON.stringify({
-              Token: data.token,
-              userId: data.id
-            })
-          )
-        );
         this.SET_USERINFO(data);
+        // 保存 token
+        this.SET_TOKEN(data.token);
         this.SET_ROLES(data.roles);
       }
     },
