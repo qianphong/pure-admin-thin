@@ -10,6 +10,7 @@ import removeConsole from "vite-plugin-remove-console";
 import themePreprocessorPlugin from "@pureadmin/theme";
 import { genScssMultipleScopeVars } from "../src/layout/theme";
 import WebConfig from "vite-plugin-web-config";
+import UnoCSS from "unocss/vite";
 
 export function getPluginsList(
   command: string,
@@ -21,6 +22,7 @@ export function getPluginsList(
     vue(),
     // jsx、tsx语法支持
     vueJsx(),
+    UnoCSS(),
     VITE_CDN ? cdn : null,
     configCompressPlugin(VITE_COMPRESSION),
     // 线上环境删除console

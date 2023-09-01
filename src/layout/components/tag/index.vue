@@ -606,6 +606,4 @@ onBeforeUnmount(() => {
   </div>
 </template>
 
-<style lang="scss" scoped>
-@import url("./index.scss");
-</style>
+<style lang="scss" scoped src="./index.scss"></style>
