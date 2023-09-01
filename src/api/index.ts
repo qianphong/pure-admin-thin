@@ -5,7 +5,8 @@ export async function login(_params: Store["loginParams"]) {
   return Promise.resolve({
     id: 123,
     userName: "演示账户",
-    token: "token123"
+    token: "token123",
+    roles: ["admin"]
   });
 }
 

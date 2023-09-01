@@ -156,12 +156,16 @@ declare global {
     $config: ServerConfigs;
   }
 
+  /**
+   * Store 中存储的用户信息，登录时的参数
+   */
   interface Store {
     loginParams: API.LoginModel;
     userInfo: {
       userName: string;
       id: number;
       token: string;
+      roles: string[];
     };
   }
 }

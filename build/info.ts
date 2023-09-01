@@ -1,8 +1,7 @@
 import type { Plugin } from "vite";
 import dayjs, { Dayjs } from "dayjs";
-import utils from "@pureadmin/utils";
+import { getPackageSize } from "@pureadmin/utils";
 import duration from "dayjs/plugin/duration";
-import { green, blue, bold } from "picocolors";
 dayjs.extend(duration);
 
 export function viteBuildInfo(): Plugin {
@@ -17,15 +16,6 @@ export function viteBuildInfo(): Plugin {
       outDir = resolvedConfig.build?.outDir ?? "dist";
     },
     buildStart() {
-      console.log(
-        bold(
-          green(
-            `👏欢迎使用${blue(
-              "[vue-pure-admin]"
-            )}，如果您感觉不错，记得点击后面链接给个star哦💖 https://github.com/pure-admin/vue-pure-admin`
-          )
-        )
-      );
       if (config.command === "build") {
         startTime = dayjs(new Date());
       }
@@ -33,17 +23,13 @@ export function viteBuildInfo(): Plugin {
     closeBundle() {
       if (config.command === "build") {
         endTime = dayjs(new Date());
-        utils.getPackageSize({
+        getPackageSize({
           folder: outDir,
           callback: (size: string) => {
             console.log(
-              bold(
-                green(
-                  `🎉恭喜打包完成（总用时${dayjs
-                    .duration(endTime.diff(startTime))
-                    .format("mm分ss秒")}，打包后的大小为${size}）`
-                )
-              )
+              `打包完成（总用时${dayjs
+                .duration(endTime.diff(startTime))
+                .format("mm分ss秒")}，打包后的大小为${size}）`
             );
           }
         });

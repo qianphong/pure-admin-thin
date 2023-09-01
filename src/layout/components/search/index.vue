@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import { useToggle } from "@vueuse/core";
 import { SearchModal } from "./components";
-import { useBoolean } from "../../hooks/useBoolean";
 import Search from "@iconify-icons/ep/search";
 
-const { bool: show, toggle } = useBoolean();
+const [show, toggle] = useToggle();
 function handleSearch() {
   toggle();
 }

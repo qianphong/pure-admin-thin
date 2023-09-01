@@ -56,6 +56,7 @@ export const useUserStore = defineStore({
           )
         );
         this.SET_USERINFO(data);
+        this.SET_ROLES(data.roles);
       }
     },
     /** 重置状态 */
