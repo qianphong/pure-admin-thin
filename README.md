@@ -15,3 +15,4 @@
 5. 删除`echarts`相关代码，如需使用请引入`vue-echarts`
 6. 引入个人工具库 `@qianphong/utils/`，提供 http 请求、API 自动生成、数据加密、持久化存储等功能
 7. 重构 `store/modules/user.ts` 更符合项目业务逻辑
+8. 🎉 迁移到[UnoCSS](https://unocss.dev)
