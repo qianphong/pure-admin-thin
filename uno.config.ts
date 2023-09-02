@@ -4,6 +4,8 @@ import {
   presetIcons,
   presetUno
 } from "unocss";
+import type { IconsOptions } from "unocss/preset-icons";
+import { iconToSVG, iconToHTML } from "@iconify/utils";
 
 export default defineConfig({
   theme: {
@@ -29,7 +31,8 @@ export default defineConfig({
     presetUno(),
     presetAttributify(),
     presetIcons({
-      extraProperties: { display: "inline-block" }
+      extraProperties: { display: "inline-block" },
+      collections: getIconCollections(["ep", "ri"])
     })
   ],
   shortcuts: [
@@ -39,3 +42,15 @@ export default defineConfig({
     ["navbar-bg-hover", "dark:text-white dark:hover:!bg-[#242424]"]
   ]
 });
+
+function getIconCollections(collections: string[]) {
+  const result: IconsOptions["collections"] = {};
+  collections.forEach(collection => {
+    result[collection] = name =>
+      import(`@iconify-icons/${collection}/${name}`).then(res => {
+        const renderData = iconToSVG(res);
+        return iconToHTML(renderData.body, renderData.attributes);
+      });
+  });
+  return result;
+}

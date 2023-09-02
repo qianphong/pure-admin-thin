@@ -1,11 +1,11 @@
-import App from "./App.vue";
-import router from "./router";
-import { setupStore } from "@/store";
-import ElementPlus from "element-plus";
-import { getServerConfig } from "./config";
 import { createApp, Directive } from "vue";
+import App from "@/App.vue";
+import router from "@/router";
+import { setupStore } from "@/store";
+import { getServerConfig } from "@/config";
 import { MotionPlugin } from "@vueuse/motion";
 import { injectResponsiveStorage } from "@/utils/responsive";
+import { useElementPlus } from "@/plugins/element-plus";
 
 // import Table from "@pureadmin/table";
 // import PureDescriptions from "@pureadmin/descriptions";
@@ -16,10 +16,7 @@ import "./style/reset.scss";
 import "./style/index.scss";
 // 引入 UnoCSS
 import "uno.css";
-import "element-plus/dist/index.css";
-// 导入字体图标
-import "./assets/iconfont/iconfont.js";
-import "./assets/iconfont/iconfont.css";
+// import "element-plus/dist/index.css";
 
 const app = createApp(App);
 
@@ -48,7 +45,8 @@ getServerConfig(app).then(async config => {
   await router.isReady();
   injectResponsiveStorage(app, config);
   setupStore(app);
-  app.use(MotionPlugin).use(ElementPlus);
+  app.use(MotionPlugin);
+  app.use(useElementPlus);
   // .use(Table);
   // .use(PureDescriptions);
   app.mount("#app");

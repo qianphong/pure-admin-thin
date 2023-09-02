@@ -4,7 +4,7 @@ import { viteBuildInfo } from "./info";
 import svgLoader from "vite-svg-loader";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import { configCompressPlugin } from "./compress";
-// import ElementPlus from "unplugin-element-plus/vite";
+import ElementPlus from "unplugin-element-plus/vite";
 import { visualizer } from "rollup-plugin-visualizer";
 import removeConsole from "vite-plugin-remove-console";
 import themePreprocessorPlugin from "@pureadmin/theme";
@@ -35,10 +35,12 @@ export function getPluginsList(
         extract: true
       }
     }),
+    // 配置开发代理和生成web.config
     WebConfig(),
     // svg组件化支持
     svgLoader(),
-    // ElementPlus({}),
+    // ElementPlus 按需引入
+    ElementPlus({}),
     // 打包分析
     lifecycle === "report"
       ? visualizer({ open: true, brotliSize: true, filename: "report.html" })

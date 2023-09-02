@@ -1,5 +1,9 @@
 import { h, defineComponent } from "vue";
 
+// 导入字体图标
+import "@/assets/iconfont/iconfont.js";
+import "@/assets/iconfont/iconfont.css";
+
 // 封装iconfont组件，默认`font-class`引用模式，支持`unicode`引用、`font-class`引用、`symbol`引用 （https://www.iconfont.cn/help/detail?spm=a313x.7781069.1998910419.20&helptype=code）
 export default defineComponent({
   name: "FontIcon",
