@@ -34,7 +34,7 @@ export function useNav() {
 
   /** 用户名 */
   const username = computed(() => {
-    return useUserStoreHook()?.userInfo?.userName;
+    return useUserStoreHook()?.userInfo?.name;
   });
 
   const avatarsStyle = computed(() => {

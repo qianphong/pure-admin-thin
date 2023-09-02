@@ -162,8 +162,8 @@ declare global {
   interface Store {
     loginParams: API.LoginModel;
     userInfo: {
-      userName: string;
       id: number;
+      name: string;
       token: string;
       roles: string[];
     };

@@ -16,7 +16,7 @@ const elStyle = computed((): CSSProperties => {
   };
 });
 
-const username = ref(useUserStoreHook()?.username);
+const username = ref(useUserStoreHook()?.userInfo?.name);
 
 const options = [
   {
@@ -29,16 +29,14 @@ const options = [
   }
 ];
 
-function onChange() {
-  useUserStoreHook()
-    .loginByUsername({ username: username.value, password: "admin123" })
-    .then(res => {
-      if (res.success) {
-        storageSession().removeItem("async-routes");
-        usePermissionStoreHook().clearAllCachePage();
-        initRouter();
-      }
-    });
+async function onChange() {
+  await useUserStoreHook().login({
+    username: username.value,
+    password: "admin123"
+  });
+  storageSession().removeItem("async-routes");
+  usePermissionStoreHook().clearAllCachePage();
+  initRouter();
 }
 </script>
 
