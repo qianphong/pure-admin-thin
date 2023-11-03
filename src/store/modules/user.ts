@@ -11,7 +11,7 @@ import {
   getUserInfo,
   setUserInfo,
   getRoles,
-  setRules
+  setRoles
 } from "@/utils/auth";
 import { login } from "@/api";
 
@@ -39,7 +39,7 @@ export const useUserStore = defineStore({
     /** 存储角色 */
     SET_ROLES(roles: Array<string>) {
       this.roles = roles;
-      setRules(roles);
+      setRoles(roles);
     },
     /** 登入 */
     async login(body: Store["loginParams"]) {

@@ -58,6 +58,6 @@ export function setUserInfo(userInfo: Store["userInfo"]) {
 export function getRoles() {
   return getAuthCache<string[]>(ROLES_KEY);
 }
-export function setRules(roles: string[]) {
-  setAuthCache(USER_INFO_KEY, roles);
+export function setRoles(roles: string[]) {
+  setAuthCache(ROLES_KEY, roles);
 }
