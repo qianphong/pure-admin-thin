@@ -2,29 +2,19 @@
 import extraIcon from "./extraIcon.vue";
 import Search from "../search/index.vue";
 import Notice from "../notice/index.vue";
+import userAction from "../userAction.vue";
 import { isAllEmpty } from "@pureadmin/utils";
 import { useNav } from "@/layout/hooks/useNav";
 import { ref, toRaw, watch, onMounted, nextTick } from "vue";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
 import { getParentPaths, findRouteByPath } from "@/router/utils";
 import { usePermissionStoreHook } from "@/store/modules/permission";
-import LogoutCircleRLine from "@iconify-icons/ri/logout-circle-r-line";
 import Setting from "@iconify-icons/ri/settings-3-line";
 
 const menuRef = ref();
 const defaultActive = ref(null);
 
-const {
-  route,
-  device,
-  logout,
-  onPanel,
-  resolvePath,
-  username,
-  userAvatar,
-  getDivStyle,
-  avatarsStyle
-} = useNav();
+const { route, device, onPanel, resolvePath, getDivStyle } = useNav();
 
 function getDefaultActive(routePath) {
   const wholeMenus = usePermissionStoreHook().wholeMenus;
@@ -93,23 +83,7 @@ watch(
       <!-- 通知 -->
       <Notice id="header-notice" />
       <!-- 退出登录 -->
-      <el-dropdown trigger="click">
-        <span class="el-dropdown-link navbar-bg-hover select-none">
-          <img :src="userAvatar" :style="avatarsStyle" />
-          <p v-if="username" class="dark:text-white">{{ username }}</p>
-        </span>
-        <template #dropdown>
-          <el-dropdown-menu class="logout">
-            <el-dropdown-item @click="logout">
-              <IconifyIconOffline
-                :icon="LogoutCircleRLine"
-                style="margin: 5px"
-              />
-              退出系统
-            </el-dropdown-item>
-          </el-dropdown-menu>
-        </template>
-      </el-dropdown>
+      <userAction dark />
       <span
         class="set-icon navbar-bg-hover"
         title="打开项目配置"
@@ -124,15 +98,5 @@ watch(
 <style lang="scss" scoped>
 :deep(.el-loading-mask) {
   opacity: 0.45;
-}
-
-.logout {
-  max-width: 120px;
-
-  ::v-deep(.el-dropdown-menu__item) {
-    display: inline-flex;
-    flex-wrap: wrap;
-    min-width: 100%;
-  }
 }
 </style>

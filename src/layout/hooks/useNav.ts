@@ -2,7 +2,6 @@ import { storeToRefs } from "pinia";
 import { getConfig } from "@/config";
 import { emitter } from "@/utils/mitt";
 import { routeMetaType } from "../types";
-import userAvatar from "@/assets/user.jpg";
 import { getTopMenu } from "@/router/utils";
 import { useGlobal } from "@pureadmin/utils";
 import { useRouter, useRoute } from "vue-router";
@@ -37,8 +36,8 @@ export function useNav() {
     return useUserStoreHook()?.userInfo?.name;
   });
 
-  const avatarsStyle = computed(() => {
-    return username.value ? { marginRight: "10px" } : "";
+  const userAvatar = computed(() => {
+    return useUserStoreHook()?.userInfo?.avatar;
   });
 
   const isCollapse = computed(() => {
@@ -127,7 +126,6 @@ export function useNav() {
     pureApp,
     username,
     userAvatar,
-    avatarsStyle,
     tooltipEffect
   };
 }

@@ -2,23 +2,13 @@
 import Search from "./search/index.vue";
 import Notice from "./notice/index.vue";
 import mixNav from "./sidebar/mixNav.vue";
+import userAction from "./userAction.vue";
 import { useNav } from "@/layout/hooks/useNav";
 import Breadcrumb from "./sidebar/breadCrumb.vue";
 import topCollapse from "./sidebar/topCollapse.vue";
-import LogoutCircleRLine from "@iconify-icons/ri/logout-circle-r-line";
 import Setting from "@iconify-icons/ri/settings-3-line";
 
-const {
-  layout,
-  device,
-  logout,
-  onPanel,
-  pureApp,
-  username,
-  userAvatar,
-  avatarsStyle,
-  toggleSideBar
-} = useNav();
+const { layout, device, onPanel, pureApp, toggleSideBar } = useNav();
 </script>
 
 <template>
@@ -45,23 +35,7 @@ const {
       <!-- 通知 -->
       <Notice id="header-notice" />
       <!-- 退出登录 -->
-      <el-dropdown trigger="click">
-        <span class="el-dropdown-link navbar-bg-hover select-none">
-          <img :src="userAvatar" :style="avatarsStyle" />
-          <p v-if="username" class="dark:text-white">{{ username }}</p>
-        </span>
-        <template #dropdown>
-          <el-dropdown-menu class="logout">
-            <el-dropdown-item @click="logout">
-              <IconifyIconOffline
-                :icon="LogoutCircleRLine"
-                style="margin: 5px"
-              />
-              退出系统
-            </el-dropdown-item>
-          </el-dropdown-menu>
-        </template>
-      </el-dropdown>
+      <userAction />
       <span
         class="set-icon navbar-bg-hover"
         title="打开项目配置"
@@ -93,26 +67,6 @@ const {
     min-width: 280px;
     height: 48px;
     color: #000000d9;
-
-    .el-dropdown-link {
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-      height: 48px;
-      padding: 10px;
-      color: #000000d9;
-      cursor: pointer;
-
-      p {
-        font-size: 14px;
-      }
-
-      img {
-        width: 22px;
-        height: 22px;
-        border-radius: 50%;
-      }
-    }
   }
 
   .breadcrumb-container {

@@ -160,12 +160,16 @@ declare global {
    * Store 中存储的用户信息，登录时的参数
    */
   interface Store {
-    loginParams: API.LoginModel;
+    loginParams: {
+      userName: string;
+      password: string;
+    };
     userInfo: {
       id: number;
       name: string;
       token: string;
       roles: string[];
+      avatar?: string;
     };
   }
 }
